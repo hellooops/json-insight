@@ -5,8 +5,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   const hintDecorationType = vscode.window.createTextEditorDecorationType({
     after: {
-      margin: "0 0 0 1rem",
-      color: "#999999",
+      margin: "0 0 0 0.5rem",
+      color: "#99999959",
       fontStyle: "italic"
     }
   });
