@@ -1,7 +1,7 @@
 {
   "name": "json-insight",
   "displayName": "JSON Insight",
-  "description": "Enhance JSON file readability by displaying key name hints for folded objects.",
+  "description": "IntelliJ like JSON annotations tool. Enhance JSON file readability by displaying key name hints for folded objects.",
   "version": "0.1.1",
   "publisher": "DericLee",
   "author": {
