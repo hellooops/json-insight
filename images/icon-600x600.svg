@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600" viewBox="0 0 600 600" xml:space="preserve">
+	<desc>Created with Fabric.js 5.2.4</desc>
+	<defs>
+	</defs>
+	<rect x="0" y="0" width="100%" height="100%" fill="transparent"></rect>
+	<g transform="matrix(Infinity NaN NaN Infinity 0 0)" id="9fed0bdb-5545-40f4-b3c5-1d947a5a2e19">
+	</g>
+	<g transform="matrix(1 0 0 1 300 300)" id="bb391f5f-6a06-436f-9162-bea762de58d9">
+		<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke" x="-300" y="-300" rx="0" ry="0" width="600" height="600" />
+	</g>
+	<g transform="matrix(1 0 0 1 350 352.39)">
+		<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-opacity: 0; fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" x="-50" y="-50" rx="0" ry="0" width="100" height="100" />
+	</g>
+	<g transform="matrix(4.54 0 0 4.54 300 300)">
+		<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(20,45,157); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-67.5, -67.5)" d="M 132.5 67.5 C 132.5 103.399 103.399 132.5 67.5 132.5 C 31.6015 132.5 2.5 103.399 2.5 67.5 C 2.5 31.6015 31.6015 2.5 67.5 2.5 C 103.399 2.5 132.5 31.6015 132.5 67.5 Z" stroke-linecap="round" />
+	</g>
+	<g transform="matrix(1.01 0 0 1.01 300 276.99)" style="" id="95272719-46ee-4097-9549-d4f34752a448">
+		<text xml:space="preserve" font-family="Raleway" font-size="200" font-style="normal" font-weight="900" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;">
+			<tspan x="-263.4" y="62.83">JSON</tspan>
+		</text>
+	</g>
+	<g transform="matrix(0.56 0 0 0.56 300 415.18)" style="" id="c20db44d-eccc-4d28-8b63-8186a4bc4762">
+		<text xml:space="preserve" font-family="Alegreya" font-size="156" font-style="normal" font-weight="700" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;">
+			<tspan x="-234.55" y="49.01">Insight</tspan>
+		</text>
+	</g>
+</svg>

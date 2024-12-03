@@ -2,7 +2,12 @@
   "name": "json-insight",
   "displayName": "JSON Insight",
   "description": "Enhance JSON file readability by displaying key name hints for folded objects.",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "publisher": "DericLee",
+  "author": {
+    "email": "slxs1415@163.com",
+    "name": "Deric Lee"
+  },
   "engines": {
     "vscode": "^1.78.0"
   },
@@ -13,6 +18,13 @@
   "activationEvents": [
     "onLanguage:json"
   ],
+  "license": "MIT",
+  "homepage": "https://github.com/hellooops/json-insight/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hellooops/json-insight.git"
+  },
+  "icon": "images/icon-600x600.png",
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
@@ -34,6 +46,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "publish": "vsce publish",
     "package": "vsce package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
