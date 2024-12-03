@@ -2,9 +2,9 @@
   "name": "json-insight",
   "displayName": "JSON Insight",
   "description": "Enhance JSON file readability by displaying key name hints for folded objects.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
-    "vscode": "^1.95.0"
+    "vscode": "^1.78.0"
   },
   "categories": [
     "Other",
@@ -15,6 +15,22 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "JSON Insight",
+      "properties": {
+        "jsonInsight.customJsonObjectAnnotationProperties": {
+          "type": "array",
+          "default": ["Name", "ID"],
+          "description": "Define which JSON object properties are to be appeared in annotations"
+        },
+        "jsonInsight.jsonObjectAnnotationType": {
+          "type": "string",
+          "enum": ["First Matched Property", "All Matched Properties"],
+          "default": "First Matched Property",
+          "description": "Determine JSON object properties count appeared in annotations"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -26,7 +42,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.95.0",
+    "@types/vscode": "^1.78.0",
     "@types/mocha": "^10.0.9",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^8.10.0",

@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 import { IDecorationable } from "./decorationable";
+import { Configurations, JSONObjectAnnotationType } from '../configurations/configurations';
+import { StringBuilder } from "../utils/utils";
 
 export class JsonDecorationsMgr implements IDecorationable {
   static decorationType = vscode.window.createTextEditorDecorationType({
@@ -11,7 +13,7 @@ export class JsonDecorationsMgr implements IDecorationable {
   });
 
   dispose(): void {
-    vscode.window.activeTextEditor!.setDecorations(JsonDecorationsMgr.decorationType, []);
+    vscode.window.activeTextEditor?.setDecorations(JsonDecorationsMgr.decorationType, []);
   }
 
   async refreshDecorations(editor: vscode.TextEditor): Promise<vscode.Disposable | undefined> {
@@ -26,6 +28,9 @@ export class JsonDecorationsMgr implements IDecorationable {
       return;
     }
 
+    const customJsonObjectAnnotationProperties = Configurations.getCustomJsonObjectAnnotationProperties();
+    const jsonObjectAnnotationType = Configurations.getJsonObjectAnnotationType();
+
     const visibleRanges = editor.visibleRanges;
     const documentText = doc.getText();
     const decorations: vscode.DecorationOptions[] = [];
@@ -37,7 +42,7 @@ export class JsonDecorationsMgr implements IDecorationable {
       const foldedText = doc.getText(foldedRange);
       try {
         const obj = JSON.parse(foldedText);
-        const objAnnotation = this.getJsonObjectAnnotation(obj);
+        const objAnnotation = this.getJsonItemAnnotation(obj, customJsonObjectAnnotationProperties, jsonObjectAnnotationType);
         if (!objAnnotation) continue;
         const decoration = {
           range: new vscode.Range(visibleRanges[i].end, visibleRanges[i].end),
@@ -56,11 +61,13 @@ export class JsonDecorationsMgr implements IDecorationable {
     this.setDecorations(decorations);
   }
 
-  getJsonObjectAnnotation(obj: any): string | undefined {
+  getJsonItemAnnotation(obj: any, customJsonObjectAnnotationProperties: string[], jsonObjectAnnotationType: JSONObjectAnnotationType): string | undefined {
     if (obj instanceof Array) {
       return `${obj.length} Elements`;
     } else {
-      const objectAnnoPropsLowercase = ["name", "id"];
+      const objectAnnoPropsLowercase = customJsonObjectAnnotationProperties.map(i => i.toLowerCase());
+      const annotationsSb = new StringBuilder();
+      const showAllMatchProps = jsonObjectAnnotationType == JSONObjectAnnotationType.AllMatchedProperties;
       for (const key of objectAnnoPropsLowercase) {
         for (const objKey of Object.keys(obj)) {
           const objKeyLowercase = objKey.toLowerCase();
@@ -70,11 +77,21 @@ export class JsonDecorationsMgr implements IDecorationable {
             continue;
           }
 
-          return `${JSON.stringify(objKey)}: ${JSON.stringify(value)}`;
+          const anno = `${JSON.stringify(objKey)}: ${JSON.stringify(value)}`;
+          if (showAllMatchProps) {
+            if (!annotationsSb.isEmpty()) annotationsSb.append(", ");
+            annotationsSb.append(anno);
+          } else {
+            return anno;
+          }
         }
       }
 
-      return undefined;
+      if (showAllMatchProps && !annotationsSb.isEmpty()) {
+        return annotationsSb.toString();
+      } else {
+        return undefined;
+      }
     }
   }
 
@@ -83,7 +100,7 @@ export class JsonDecorationsMgr implements IDecorationable {
   }
 
   private setDecorations(decorations: vscode.DecorationOptions[]) {
-    vscode.window.activeTextEditor!.setDecorations(JsonDecorationsMgr.decorationType, decorations);
+    vscode.window.activeTextEditor?.setDecorations(JsonDecorationsMgr.decorationType, decorations);
   }
 
   registerDecorations(): vscode.Disposable[] {
@@ -95,6 +112,21 @@ export class JsonDecorationsMgr implements IDecorationable {
       vscode.window.onDidChangeTextEditorVisibleRanges(event => {
         if (event) {
           this.refreshDecorations(event.textEditor);
+        }
+      }),
+      vscode.workspace.onDidChangeTextDocument(event => {
+        if (event && event.document) {
+          this.refreshDecorations(vscode.window.activeTextEditor!);
+        }
+      }),
+      vscode.window.onDidChangeActiveTextEditor(editor => {
+        if (editor) {
+          this.refreshDecorations(vscode.window.activeTextEditor!);
+        }
+      }),
+      vscode.window.onDidChangeTextEditorSelection(event => {
+        if (event.textEditor) {
+          this.refreshDecorations(vscode.window.activeTextEditor!);
         }
       })
     ];
