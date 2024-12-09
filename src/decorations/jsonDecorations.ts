@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import { IDecorationable } from "./decorationable";
 import { Configurations, JSONObjectAnnotationType } from '../configurations/configurations';
 import { StringBuilder } from "../utils/utils";
+import { JsoncParserUtils } from "../parser/jsoncParserUtils";
+import { parseTree } from "jsonc-parser";
 
 export class JsonDecorationsMgr implements IDecorationable {
   static decorationType = vscode.window.createTextEditorDecorationType({
@@ -41,8 +43,9 @@ export class JsonDecorationsMgr implements IDecorationable {
       const foldedRange = new vscode.Range(visibleRanges[i].end.translate(0, -1), visibleRanges[i + 1].start.translate(0, nextCharOffsetAfterFoldedLine + 1));
       const foldedText = doc.getText(foldedRange);
       try {
-        const obj = JSON.parse(foldedText);
-        const objAnnotation = this.getJsonItemAnnotation(obj, customJsonObjectAnnotationProperties, jsonObjectAnnotationType);
+        const rootNode = parseTree(foldedText);
+        if (!rootNode) continue;
+        const objAnnotation = JsoncParserUtils.getNodeAnnotation(rootNode, customJsonObjectAnnotationProperties, jsonObjectAnnotationType, true);
         if (!objAnnotation) continue;
         const decoration = {
           range: new vscode.Range(visibleRanges[i].end, visibleRanges[i].end),
