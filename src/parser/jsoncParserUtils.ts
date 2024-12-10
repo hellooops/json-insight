@@ -1,6 +1,6 @@
 import { type Node as JsonNode } from "jsonc-parser";
 import * as vscode from "vscode";
-import { JSONObjectAnnotationType } from "../configurations/configurations";
+import { JSONObjectAnnotationType } from '../configurations/configurations';
 import { StringBuilder } from "../utils/utils";
 
 export class JsoncParserUtils {
@@ -26,9 +26,9 @@ export class JsoncParserUtils {
     if (node.parent) {
       if (node.parent.type === "array") {
         const nodeRange = JsoncParserUtils.getNodeRange(document, node);
-        let nodeAnno = JsoncParserUtils.getNodeAnnotation(node, customJsonObjectAnnotationProperties, JSONObjectAnnotationType.FirstMatchedProperty, false);
+        let nodeAnno = JsoncParserUtils.getNodeAnnotation({ node, customJsonObjectAnnotationProperties, annoJsonify: false });
         if (!nodeAnno) nodeAnno = node.parent.children!.indexOf(node).toString();
-        const title = JsoncParserUtils.nodeValueAsString(nodeAnno);
+        const title = JsoncParserUtils.normalizeNodeValue(nodeAnno);
         nodeSymbol = new vscode.DocumentSymbol(
           title,
           title,
@@ -39,10 +39,8 @@ export class JsoncParserUtils {
       } else if (node.parent.type === "object" && node.type === "property") {
         const nodeRange = JsoncParserUtils.getNodeRange(document, node);
         if (node.children && node.children.length > 0) {
-          // TODO
-          const nodeIndex = JsoncParserUtils.getNodeAnnotation(node, customJsonObjectAnnotationProperties, JSONObjectAnnotationType.FirstMatchedProperty, false);
-          const title = JsoncParserUtils.nodeValueAsString(nodeIndex);
-          // const title = JsoncParserUtils.nodeValueAsString(node.children[0].value);
+          let nodeAnno = JsoncParserUtils.getNodeAnnotation({ node, customJsonObjectAnnotationProperties, annoJsonify: false });
+          const title = JsoncParserUtils.normalizeNodeValue(nodeAnno);
           nodeSymbol = new vscode.DocumentSymbol(
             title,
             title,
@@ -73,7 +71,7 @@ export class JsoncParserUtils {
     }
   }
 
-  static nodeValueAsString(value: any): string {
+  static normalizeNodeValue(value: any): string {
     if (value === undefined || value === null) {
       return "";
     } else if (value === "") {
@@ -122,7 +120,17 @@ export class JsoncParserUtils {
     return document.positionAt(node.offset + node.length + 1);
   }
 
-  static getNodeAnnotation(node: JsonNode, customJsonObjectAnnotationProperties: string[], jsonObjectAnnotationType: JSONObjectAnnotationType, annoJsonify: boolean): string | undefined {
+  static getNodeAnnotation({
+    node,
+    customJsonObjectAnnotationProperties,
+    jsonObjectAnnotationType = JSONObjectAnnotationType.FirstMatchedProperty,
+    annoJsonify
+  }: {
+    node: JsonNode,
+    customJsonObjectAnnotationProperties: string[],
+    jsonObjectAnnotationType?: JSONObjectAnnotationType,
+    annoJsonify: boolean
+  }): string | undefined {
     if (node.type === "array") {
       return `${node.children!.length} Elements`;
     } else if (node.type === "object") {
@@ -133,7 +141,7 @@ export class JsoncParserUtils {
       for (const key of objectAnnoPropsLowercase) {
         for (const attr of node.children) {
           if (!attr.children || attr.children.length !== 2) continue;
-          const objKey = JsoncParserUtils.nodeValueAsString(attr.children[0].value);
+          const objKey = JsoncParserUtils.normalizeNodeValue(attr.children[0].value);
           const objKeyLowercase = objKey.toLowerCase();
           if (objKeyLowercase !== key) continue;
           const value = attr.children[1].value;
@@ -145,7 +153,7 @@ export class JsoncParserUtils {
           if (annoJsonify) {
             anno = `${JSON.stringify(objKey)}: ${JSON.stringify(value)}`;
           } else {
-            anno = JsoncParserUtils.nodeValueAsString(value);
+            anno = JsoncParserUtils.normalizeNodeValue(value);
           }
 
           if (showAllMatchProps) {
@@ -166,7 +174,7 @@ export class JsoncParserUtils {
       if (!node.children || node.children.length < 1) {
         return undefined;
       }
-      return JsoncParserUtils.nodeValueAsString(node.children[0].value)
+      return JsoncParserUtils.normalizeNodeValue(node.children[0].value)
     } else {
       return undefined;
     }

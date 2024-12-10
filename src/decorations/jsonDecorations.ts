@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { IDecorationable } from "./decorationable";
 import { Configurations, JSONObjectAnnotationType } from '../configurations/configurations';
 import { StringBuilder } from "../utils/utils";
-import { JsoncParserUtils } from "../parser/jsoncParserUtils";
+import { JsoncParserUtils } from '../parser/jsoncParserUtils';
 import { parseTree } from "jsonc-parser";
 
 export class JsonDecorationsMgr implements IDecorationable {
@@ -45,7 +45,7 @@ export class JsonDecorationsMgr implements IDecorationable {
       try {
         const rootNode = parseTree(foldedText);
         if (!rootNode) continue;
-        const objAnnotation = JsoncParserUtils.getNodeAnnotation(rootNode, customJsonObjectAnnotationProperties, jsonObjectAnnotationType, true);
+        const objAnnotation = JsoncParserUtils.getNodeAnnotation({ node: rootNode, customJsonObjectAnnotationProperties, jsonObjectAnnotationType, annoJsonify: true });
         if (!objAnnotation) continue;
         const decoration = {
           range: new vscode.Range(visibleRanges[i].end, visibleRanges[i].end),
