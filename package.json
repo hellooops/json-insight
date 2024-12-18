@@ -2,7 +2,7 @@
   "name": "json-insight",
   "displayName": "JSON Insight",
   "description": "IntelliJ like JSON annotations tool. Enhance JSON file readability by displaying key name hints for folded objects.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "DericLee",
   "author": {
     "email": "slxs1415@163.com",
@@ -13,7 +13,8 @@
   },
   "categories": [
     "Other",
-    "Programming Languages"
+    "Programming Languages",
+    "Visualization"
   ],
   "activationEvents": [
     "onLanguage:json"

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Taylor Swift",
+    "genre": "Pop",
+    "hits": 50,
+    "albums": [
+      "Fearless",
+      "1989",
+      "Reputation",
+      "Lover"
+    ],
+    "awards": [
+      "Grammy",
+      "MTV Music Award"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Ed Sheeran",
+    "genre": "Pop",
+    "hits": 45,
+    "albums": [
+      "Divide",
+      "Multiply",
+      "Equals"
+    ],
+    "awards": [
+      "Brit Award",
+      "Grammy"
+    ]
+  },
+  {
+    "ID": "3",
+    "Name": "Adele",
+    "Genre": "Soul",
+    "hits": 40,
+    "albums": [
+      "19",
+      "21",
+      "25",
+      "30"
+    ],
+    "awards": [
+      "Oscar",
+      "Grammy",
+      "Golden Globe"
+    ]
+  }
+]
